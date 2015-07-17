@@ -1,6 +1,6 @@
 name: dartnow
 environment:
-  sdk: '>=1.11.0 <2.0.0'
+  sdk: '>=1.10.0 <2.0.0'
 dependencies:
   mdl: "^1.0.0"
   browser: '^0.10.0'
