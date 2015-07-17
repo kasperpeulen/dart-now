@@ -32,6 +32,6 @@ Example: https://gist.github.com/kasperpeulen/95e7eb260a737c0828dd
 
 ### Getting started with a library
 
-If you have written a library, and you want users to be able to quickly started with it, then you could add those examples also to dartnow:
+If you have written a library, and you want users to be able to get quickly started with it, then you could add those examples also to dartnow, for example:
 
 https://gist.github.com/kasperpeulen/9b71b6f5f094e658043c
