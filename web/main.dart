@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:github/browser.dart';
 import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
-import 'packages/mdl/mdl.dart' as mdl;
 
 Set<String> gistIds = [
   '8cefaa4f72db16e0f9ee',
@@ -27,7 +26,6 @@ InputElement elementInputElement = querySelector('#dart_element');
 InputElement keywordsInputElement = querySelector('#keywords');
 
 main() async {
-  await initMdl();
   await fetchGists();
 
   filterGistsAndShow();
@@ -35,11 +33,6 @@ main() async {
   libraryInputElement.onInput.listen((e) => filterGistsAndShow());
   elementInputElement.onInput.listen((e) => filterGistsAndShow());
   keywordsInputElement.onInput.listen((e) => filterGistsAndShow());
-}
-
-initMdl() async {
-  mdl.registerMdl();
-  await mdl.componentFactory().run();
 }
 
 fetchGists() async {

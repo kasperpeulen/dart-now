@@ -12,8 +12,10 @@
   max-width: 800px;
   margin: 0 auto;
 }
-
+.mdl-textfield {
+  width: initial;
+}
 #search {
-  width: 650px;
-  margin: 0 auto;
+  width: 660px;
+  margin: 20px auto;
 }
