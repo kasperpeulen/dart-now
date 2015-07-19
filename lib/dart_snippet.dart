@@ -8,8 +8,8 @@ class DartSnippet {
   final String tags;
   final String id;
   final String author;
-  final String dartpad;
-  final String gist;
+  final String dartpadUrl;
+  final String gistUrl;
 
   DartSnippet.fromJSON(this.id, Map json) :
     name = json['name'],
@@ -18,6 +18,6 @@ class DartSnippet {
     mainElements = json['mainElements'],
     tags = json['tags'],
     author = json['author'],
-    dartpad = json['dartpad'],
-    gist = json['gist'];
+    dartpadUrl = json['dartpadUrl'],
+    gistUrl = json['gistUrl'];
 }
