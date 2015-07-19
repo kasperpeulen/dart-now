@@ -22,7 +22,7 @@ main() async {
 }
 
 fetchFirebase() async {
-  Firebase firebase = new Firebase('https:/dartnow.firebaseio.com/');
+  Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
 
   firebase.child('gists').onValue.listen((e) {
     DataSnapshot snapshot = e.snapshot;
