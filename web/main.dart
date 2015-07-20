@@ -43,9 +43,16 @@ filterGistsAndShow() {
 
   List<String> keywords = keywordsInputElement.value.split(' ');
   List<String> elements = elementInputElement.value.split(' ');
+
+  // TODO refactor this to method in DartSnippet
+  bool dependencies(DartSnippet snippet) {
+    if (snippet.dependencies == null) return false;
+    return snippet.dependencies.keys.any((s) => s.contains(libraryInputElement.value));
+  }
+
   Set<DartSnippet> filtered =
       snippets.where((snippet) =>
-        snippet.mainLibrary.contains(libraryInputElement.value) &&
+        (snippet.mainLibrary.contains(libraryInputElement.value) || dependencies(snippet)) &&
         elements.any((inputElement) =>
            snippet.mainElements.split(' ').any((element) =>
               element.contains(inputElement))) &&
