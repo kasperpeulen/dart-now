@@ -44,6 +44,9 @@ class DartSnippet {
         https://dartpad.dartlang.org/${id}
       </a><br>
     ''' : ''}
+    ${tags.length == 0 ? "" :
+    '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
+
     ''', validator: new TrustedNodeValidator())
       ..classes.addAll(['snippet', 'mdl-shadow--2dp']);
   }
