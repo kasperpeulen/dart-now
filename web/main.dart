@@ -52,32 +52,13 @@ filterGistsAndShow() {
 
   Set<DartSnippet> filtered =
       snippets.where((snippet) =>
-        (snippet.mainLibrary.contains(libraryInputElement.value) || dependencies(snippet)) &&
-        elements.any((inputElement) =>
-           snippet.mainElements.split(' ').any((element) =>
-              element.contains(inputElement))) &&
-        keywords.every((s) => snippet.description.contains(s))).toSet();
-  filtered.forEach(renderSnippet);
+         snippet.matches(libraryInputElement.value, elementInputElement.value, keywordsInputElement.value))
+      .toSet();
+  List<DartSnippet> ordered = filtered.toList()..sort((DartSnippet a, DartSnippet b) =>
+      a.matchesMainLibrary(libraryInputElement.value) ? 1 : -1);
+  ordered.reversed.forEach(renderSnippet);
 }
 
 renderSnippet(DartSnippet snippet) {
-  DivElement output = new DivElement()
-    ..setInnerHtml('''
-    <b>Main library:</b> ${snippet.mainLibrary}<br>
-    <b>Main element${snippet.mainElements.split(' ').length > 1 ? "s" : ""}:</b>
-    ${snippet.mainElements.toString().replaceAll('{','').replaceAll('}','')}<br>
-    <b>Description:</b> ${snippet.description}<br>
-    <b>Author:</b> ${snippet.author}<br>
-    <b>Gist:</b> <a href="${snippet.gistUrl}" target="_blank">${snippet.gistUrl}</a><br>
-    ${snippet.mainLibrary.contains('dart') ?
-    '''
-      <b>Dartpad:</b>
-      <a href="https://dartpad.dartlang.org/${snippet.id}" target="_blank">
-        https://dartpad.dartlang.org/${snippet.id}
-      </a><br>
-    ''' : ''}
-    ''', validator: new TrustedNodeValidator())
-    ..classes.addAll(['snippet', 'mdl-shadow--2dp']);
-
-  snippetsDivElement.append(output);
+  snippetsDivElement.append(snippet.toHtml());
 }
