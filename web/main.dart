@@ -68,11 +68,11 @@ renderSnippet(DartSnippet snippet) {
     ${snippet.mainElements.toString().replaceAll('{','').replaceAll('}','')}<br>
     <b>Description:</b> ${snippet.description}<br>
     <b>Author:</b> ${snippet.author}<br>
-    <b>Gist:</b> <a href="${snippet.gistUrl}">${snippet.gistUrl}</a><br>
+    <b>Gist:</b> <a href="${snippet.gistUrl}" target="_blank">${snippet.gistUrl}</a><br>
     ${snippet.mainLibrary.contains('dart') ?
     '''
       <b>Dartpad:</b>
-      <a href="https://dartpad.dartlang.org/${snippet.id}">
+      <a href="https://dartpad.dartlang.org/${snippet.id}" target="_blank">
         https://dartpad.dartlang.org/${snippet.id}
       </a><br>
     ''' : ''}
