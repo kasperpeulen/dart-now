@@ -54,8 +54,13 @@ filterGistsAndShow() {
       snippets.where((snippet) =>
          snippet.matches(libraryInputElement.value, elementInputElement.value, keywordsInputElement.value))
       .toSet();
-  List<DartSnippet> ordered = filtered.toList()..sort((DartSnippet a, DartSnippet b) =>
-      a.matchesMainLibrary(libraryInputElement.value) ? 1 : -1);
+  List<DartSnippet> ordered = filtered.toList()..sort((DartSnippet a, DartSnippet b) {
+    if (a.matchesMainLibrary(libraryInputElement.value) && !b.matchesMainLibrary(libraryInputElement.value)) {
+      return 1;
+    }
+    return a.updatedAt.compareTo(b.updatedAt);
+  });
+
   ordered.reversed.forEach(renderSnippet);
 }
 

@@ -2,6 +2,7 @@ library dartnow.dart_snippet;
 
 import 'dart:html';
 import 'package:dartnow/common.dart';
+import 'package:intl/intl.dart';
 
 class DartSnippet {
   final String name;
@@ -15,6 +16,8 @@ class DartSnippet {
   final Map<String, String> dependencies;
   final String gistUrl;
   final List<String> libraries;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   DartSnippet.fromJSON(this.id, Map json) :
     name = json['name'],
@@ -22,6 +25,8 @@ class DartSnippet {
     mainLibrary = json['mainLibrary'],
     mainElements = json['mainElements'],
     dependencies = json['dependencies'],
+    createdAt = json['createdAt'] == null ? null : DateTime.parse(json['createdAt']),
+    updatedAt = json['updatedAt'] == null ? null : DateTime.parse(json['updatedAt']),
     tags = json['tags'],
     author = json['author'],
     dartpadUrl = json['dartpadUrl'],
@@ -46,6 +51,11 @@ class DartSnippet {
     '<em>$mainLibrary</em>')}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     <code>${mainElements}</code><br>
+    ${createdAt == null ? '' : '<b>Created </b> '
+    '${formatDate(createdAt)}'
+    '<br>'}
+    ${updatedAt == null ? '' : '<b>Updated </b> ${formatDate(updatedAt)}<br>'}
+
     <b>Author:</b> ${author}<br>
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
     ${mainLibrary.contains('dart') ?
@@ -92,4 +102,27 @@ class DartSnippet {
 
   bool _stringIsContainedInList(String string, List<String> list) =>
     list.any((element) => element.contains(string));
+
+
+  String formatDate(DateTime date, {bool short: true, bool includeSeconds: false}) {
+    Duration difference = new DateTime.now().difference(date);
+    int days = difference.inDays;
+    int hours = difference.inHours;
+    int minutes = difference.inMinutes;
+    int seconds = difference.inSeconds;
+
+    if (days < 7 && hours > 24) {
+      return '$days day ago';
+    }
+    if (hours < 24 && minutes > 60) {
+      return '$hours hours ago';
+    }
+    if (minutes < 60 && seconds > 60) {
+      return '$minutes minutes ago';
+    }
+    if (seconds < 60) {
+      return '$seconds seconds ago';
+    }
+    return new DateFormat("MMM d ''yy 'at' HH:mm").format(date);
+  }
 }
