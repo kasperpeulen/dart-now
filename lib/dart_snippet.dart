@@ -2,7 +2,8 @@ library dartnow.dart_snippet;
 
 import 'dart:html';
 import 'package:dartnow/common.dart';
-import 'package:intl/intl.dart';
+import 'package:github/browser.dart';
+import 'dart:async';
 
 class DartSnippet {
   final String name;
@@ -18,6 +19,7 @@ class DartSnippet {
   final List<String> libraries;
   final DateTime createdAt;
   final DateTime updatedAt;
+  User user;
 
   DartSnippet.fromJSON(this.id, Map json) :
     name = json['name'],
@@ -44,6 +46,7 @@ class DartSnippet {
   }
 
   DivElement toHtml() {
+//    user = await getUser();
     return new DivElement()
       ..setInnerHtml('''
     ${description}<br><br>
@@ -51,12 +54,8 @@ class DartSnippet {
     '<em>$mainLibrary</em>')}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     <code>${mainElements}</code><br>
-    ${createdAt == null ? '' : '<b>Created </b> '
-    '${formatDate(createdAt)}'
-    '<br>'}
-    ${updatedAt == null ? '' : '<b>Updated </b> ${formatDate(updatedAt)}<br>'}
-
     <b>Author:</b> ${author}<br>
+    <!-- <img height="15px" src=user.avatarUrl></img> -->
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
     ${mainLibrary.contains('dart') ?
     '''
@@ -65,6 +64,9 @@ class DartSnippet {
         https://dartpad.dartlang.org/${id}
       </a><br>
     ''' : ''}
+    ${(true || createdAt == null)  ? '' : '<b>Created </b> ${formatDate(createdAt)}<br>'}
+    ${updatedAt == null ? '' : '<b>Updated </b> ${formatDate(updatedAt)}<br>'}
+
     ${tags.length == 0 ? "" :
     '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
 
@@ -103,26 +105,9 @@ class DartSnippet {
   bool _stringIsContainedInList(String string, List<String> list) =>
     list.any((element) => element.contains(string));
 
-
-  String formatDate(DateTime date, {bool short: true, bool includeSeconds: false}) {
-    Duration difference = new DateTime.now().difference(date);
-    int days = difference.inDays;
-    int hours = difference.inHours;
-    int minutes = difference.inMinutes;
-    int seconds = difference.inSeconds;
-
-    if (days < 7 && hours > 24) {
-      return '$days day ago';
-    }
-    if (hours < 24 && minutes > 60) {
-      return '$hours hours ago';
-    }
-    if (minutes < 60 && seconds > 60) {
-      return '$minutes minutes ago';
-    }
-    if (seconds < 60) {
-      return '$seconds seconds ago';
-    }
-    return new DateFormat("MMM d ''yy 'at' HH:mm").format(date);
-  }
+//
+//  Future<User> getUser() async {
+//    GitHub gitHub = createGitHubClient();
+//    return await gitHub.users.getUser('kasperpeulen');
+//  }
 }
