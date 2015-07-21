@@ -26,15 +26,26 @@ class DartSnippet {
     author = json['author'],
     dartpadUrl = json['dartpadUrl'],
     gistUrl = json['gistUrl'],
-    libraries = json['libraries'] ==  null ? [] : json['libraries'];
+    libraries = json['libraries'] ==  null ? [] : json['libraries'] {
+    libraries..remove(mainLibrary)..add(mainLibrary)
+      ..sort((String a, String b) {
+      if(mainLibrary.contains(a)) {
+        return -1;
+      } else if (a.contains('dart')) {
+        return 1;
+      }
+      return 1;
+    });
+  }
 
   DivElement toHtml() {
     return new DivElement()
       ..setInnerHtml('''
-    <b>Main library:</b> ${mainLibrary}<br>
+    ${description}<br><br>
+    <b>Libraries:</b> <code>${libraries.join(' ').replaceAll(mainLibrary,
+    '<em>$mainLibrary</em>')}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
-    ${mainElements.toString().replaceAll('{','').replaceAll('}','')}<br>
-    <b>Description:</b> ${description}<br>
+    <code>${mainElements}</code><br>
     <b>Author:</b> ${author}<br>
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
     ${mainLibrary.contains('dart') ?
@@ -52,7 +63,7 @@ class DartSnippet {
   }
 
   bool matches(String libraryInput, String elementInput, String keywordInput) {
-    List<String> libraries = this.libraries..add(mainLibrary);
+    List<String> libraries = []..addAll(this.libraries)..add(mainLibrary);
     List<String> searchLibraries = libraryInput.split(' ');
     List<String> searchElements = elementInput.split(' ');
     List<String> searchKeywords = keywordInput.split(' ');

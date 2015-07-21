@@ -3,7 +3,23 @@
   padding: 10px;
   margin: 20px 0 ;
 }
+body {
+  font-family: Roboto;
+}
+a {
+  font-weight: 400;
+}
+code {
+  font-family: 'Source Code Pro';
+  font-size: 14px;
+  font-weight: 400;
+}
 
+code em {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+}
 .mdl-textfield {
   margin: 0 15px;
 }
