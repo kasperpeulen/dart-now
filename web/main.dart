@@ -95,13 +95,14 @@ void searchLibrary(RouteEnterEvent event) {
   if (element.isNotEmpty) {
     elementInputElement.parent.classes.add('is-dirty');
   } else {
-    libraryInputElement.parent.classes.remove('is-dirty');
+    elementInputElement.parent.classes.remove('is-dirty');
   }
 
   if (keyword.isNotEmpty) {
     keywordsInputElement.parent.classes.add('is-dirty');
   } else {
-    libraryInputElement.parent.classes.remove('is-dirty');
+    keywordsInputElement.parent.classes.remove('is-dirty');
   }
+
   filterGistsAndShow();
 }
