@@ -19,8 +19,10 @@ main() async {
 
   router = new Router();
   router.root
-    ..addRoute(name: 'search', defaultRoute: true, path: '/search', enter: searchLibrary);
+    ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
   router.listen();
+
+  routerGo();
 
   document.onKeyUp.listen((e) => routerGo());
 
