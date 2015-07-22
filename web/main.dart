@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:async';
 
 import 'package:firebase/firebase.dart';
+import 'package:route_hierarchical/client.dart';
 
 import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
@@ -15,6 +16,21 @@ InputElement keywordsInputElement = querySelector('#keywords');
 
 main() async {
   await fetchFirebase();
+
+  var router = new Router();
+  router.root
+    ..addRoute(
+      name: 'library',
+      path: '/library/:libraryId',
+      enter: searchLibrary,
+      mount: (router) => router
+    ..addRoute(
+          name: 'element',
+          path: '/element/:elementId',
+          enter: searchElement,
+          mount: (router) => router
+    ..addRoute(name: 'keywords', path: '/keyword/:keywordId', enter: searchKeywords)));
+  router.listen();
 
   libraryInputElement.onInput.listen((e) => filterGistsAndShow());
   elementInputElement.onInput.listen((e) => filterGistsAndShow());
@@ -41,15 +57,6 @@ filterGistsAndShow() {
   // remove old output first
   snippetsDivElement.innerHtml = "";
 
-  List<String> keywords = keywordsInputElement.value.split(' ');
-  List<String> elements = elementInputElement.value.split(' ');
-
-  // TODO refactor this to method in DartSnippet
-  bool dependencies(DartSnippet snippet) {
-    if (snippet.dependencies == null) return false;
-    return snippet.dependencies.keys.any((s) => s.contains(libraryInputElement.value));
-  }
-
   Set<DartSnippet> filtered =
       snippets.where((snippet) =>
          snippet.matches(libraryInputElement.value, elementInputElement.value, keywordsInputElement.value))
@@ -66,4 +73,16 @@ filterGistsAndShow() {
 
 renderSnippet(DartSnippet snippet) {
   snippetsDivElement.append(snippet.toHtml());
+}
+
+void searchLibrary(RouteEnterEvent event) {
+  libraryInputElement.value = event.parameters['libraryId'];
+}
+
+void searchElement(RouteEnterEvent event) {
+  elementInputElement.value = event.parameters['elementId'];
+}
+
+void searchKeywords(RouteEnterEvent event) {
+  keywordsInputElement.value = event.parameters['keywordId'];
 }
