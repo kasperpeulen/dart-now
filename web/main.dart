@@ -17,12 +17,12 @@ InputElement keywordsInputElement = querySelector('#keywords');
 main() async {
   await fetchFirebase();
 
-  router = new Router();
+  router = new Router(useFragment: true);
   router.root
     ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
   router.listen();
 
-  routerGo();
+//  routerGo();
 
   document.onKeyUp.listen((e) => routerGo());
 
@@ -90,14 +90,20 @@ void searchLibrary(RouteEnterEvent event) {
 
   if (library.isNotEmpty) {
     libraryInputElement.parent.classes.add('is-dirty');
+  } else {
+    libraryInputElement.parent.classes.remove('is-dirty');
   }
 
   if (element.isNotEmpty) {
     elementInputElement.parent.classes.add('is-dirty');
+  } else {
+    libraryInputElement.parent.classes.remove('is-dirty');
   }
 
   if (keyword.isNotEmpty) {
     keywordsInputElement.parent.classes.add('is-dirty');
+  } else {
+    libraryInputElement.parent.classes.remove('is-dirty');
   }
   filterGistsAndShow();
 }
