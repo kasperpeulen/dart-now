@@ -8,7 +8,7 @@ import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
 
 List<DartSnippet> snippets = [];
-
+Router router;
 DivElement snippetsDivElement = querySelector('#snippets');
 InputElement libraryInputElement = querySelector('#library');
 InputElement elementInputElement = querySelector('#dart_element');
@@ -17,7 +17,7 @@ InputElement keywordsInputElement = querySelector('#keywords');
 main() async {
   await fetchFirebase();
 
-  var router = new Router();
+  router = new Router();
   router.root
     ..addRoute(
       name: 'library',
@@ -32,9 +32,17 @@ main() async {
     ..addRoute(name: 'keywords', path: '/keyword/:keywordId', enter: searchKeywords)));
   router.listen();
 
-  libraryInputElement.onInput.listen((e) => filterGistsAndShow());
-  elementInputElement.onInput.listen((e) => filterGistsAndShow());
-  keywordsInputElement.onInput.listen((e) => filterGistsAndShow());
+  libraryInputElement.onInput.listen((e) => routerGo());
+  elementInputElement.onInput.listen((e) => routerGo());
+  keywordsInputElement.onInput.listen((e) => routerGo());
+}
+
+routerGo(){
+  String library = libraryInputElement.value == '' ? '' : '/library/${libraryInputElement.value}';
+  String element = elementInputElement.value == '' ? '' : '/element/${elementInputElement.value}';
+  String keyword = keywordsInputElement.value == '' ? '' : '/keyword/${keywordsInputElement.value}';
+
+  router.gotoUrl('$library$element$keyword');
 }
 
 fetchFirebase() async {
@@ -78,14 +86,17 @@ renderSnippet(DartSnippet snippet) {
 void searchLibrary(RouteEnterEvent event) {
   libraryInputElement.value = event.parameters['libraryId'];
   libraryInputElement.parent.classes.add('is-dirty');
+  filterGistsAndShow();
 }
 
 void searchElement(RouteEnterEvent event) {
   elementInputElement.value = event.parameters['elementId'];
   elementInputElement.parent.classes.add('is-dirty');
+  filterGistsAndShow();
 }
 
 void searchKeywords(RouteEnterEvent event) {
   keywordsInputElement.value = event.parameters['keywordId'];
   keywordsInputElement.parent.classes.add('is-dirty');
+  filterGistsAndShow();
 }
