@@ -77,12 +77,15 @@ renderSnippet(DartSnippet snippet) {
 
 void searchLibrary(RouteEnterEvent event) {
   libraryInputElement.value = event.parameters['libraryId'];
+  libraryInputElement.parent.classes.add('is-dirty');
 }
 
 void searchElement(RouteEnterEvent event) {
   elementInputElement.value = event.parameters['elementId'];
+  elementInputElement.parent.classes.add('is-dirty');
 }
 
 void searchKeywords(RouteEnterEvent event) {
   keywordsInputElement.value = event.parameters['keywordId'];
+  keywordsInputElement.parent.classes.add('is-dirty');
 }
