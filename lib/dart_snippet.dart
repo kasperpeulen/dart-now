@@ -69,11 +69,10 @@ class DartSnippet {
     '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
     </div>
     <div class="right">
-        <img height="60px" float="left" src="https://avatars.githubusercontent.com/u/1035299?v=3"></img>
+        <img height="40px" float="left" src="https://avatars.githubusercontent.com/u/1035299?v=3"></img>
         <div style="vertical-align:middle; display:inline-block" float="right">
             ${updatedAt == null ? '' : ' updated ${formatDate(updatedAt)}<br>'}
             by kasperpeulen<br>
-            8 points
             </div>
       </div>
     ''', validator: new TrustedNodeValidator())

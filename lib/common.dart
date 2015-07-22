@@ -24,13 +24,13 @@ String formatDate(DateTime date, {bool short: true, bool includeSeconds: false})
     return '$days day ago';
   }
   if (hours < 24 && minutes > 60) {
-    return '$hours hours ago';
+    return '$hours hour${hours >1 ? 's' : ''} ago';
   }
   if (minutes < 60 && seconds > 60) {
-    return '$minutes minutes ago';
+    return '$minutes min${minutes >1 ? 's' : ''} ago';
   }
   if (seconds < 60) {
-    return '$seconds seconds ago';
+    return '$seconds sec${seconds > 1 ? 's' : ''} ago';
   }
   return new DateFormat("MMM d ''yy 'at' HH:mm").format(date);
 }
