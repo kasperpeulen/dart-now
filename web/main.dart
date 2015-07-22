@@ -20,29 +20,46 @@ main() async {
   router = new Router();
   router.root
     ..addRoute(
-      name: 'library',
-      path: '/library/:libraryId',
-      enter: searchLibrary,
-      mount: (router) => router
+        name: 'home', defaultRoute: true, path: '/', enter: searchLibrary)
     ..addRoute(
+        name: 'library',
+        path: '/library/:libraryId',
+        enter: searchLibrary,
+        mount: (router) => router
+      ..addRoute(
           name: 'element',
           path: '/element/:elementId',
           enter: searchElement,
           mount: (router) => router
-    ..addRoute(name: 'keywords', path: '/keyword/:keywordId', enter: searchKeywords)));
+        ..addRoute(
+            name: 'keywords',
+            path: '/keyword/:keywordId',
+            enter: searchKeywords)));
   router.listen();
+
+  document.onKeyDown.listen((e) => routerGo());
 
   libraryInputElement.onInput.listen((e) => routerGo());
   elementInputElement.onInput.listen((e) => routerGo());
   keywordsInputElement.onInput.listen((e) => routerGo());
 }
 
-routerGo(){
-  String library = libraryInputElement.value == '' ? '' : '/library/${libraryInputElement.value}';
-  String element = elementInputElement.value == '' ? '' : '/element/${elementInputElement.value}';
-  String keyword = keywordsInputElement.value == '' ? '' : '/keyword/${keywordsInputElement.value}';
+routerGo() {
+  String library = libraryInputElement.value == ''
+      ? ''
+      : '/library/${libraryInputElement.value}';
+  String element = elementInputElement.value == ''
+      ? ''
+      : '/element/${elementInputElement.value}';
+  String keyword = keywordsInputElement.value == ''
+      ? ''
+      : '/keyword/${keywordsInputElement.value}';
 
-  router.gotoUrl('$library$element$keyword');
+  String url = '$library$element$keyword';
+  if (url == '') {
+    url = '/';
+  }
+  router.gotoUrl(url);
 }
 
 fetchFirebase() async {
@@ -58,23 +75,24 @@ fetchFirebase() async {
     });
     filterGistsAndShow();
   });
-
 }
 
 filterGistsAndShow() {
   // remove old output first
   snippetsDivElement.innerHtml = "";
 
-  Set<DartSnippet> filtered =
-      snippets.where((snippet) =>
-         snippet.matches(libraryInputElement.value, elementInputElement.value, keywordsInputElement.value))
+  Set<DartSnippet> filtered = snippets
+      .where((snippet) => snippet.matches(libraryInputElement.value,
+          elementInputElement.value, keywordsInputElement.value))
       .toSet();
-  List<DartSnippet> ordered = filtered.toList()..sort((DartSnippet a, DartSnippet b) {
-    if (a.matchesMainLibrary(libraryInputElement.value) && !b.matchesMainLibrary(libraryInputElement.value)) {
-      return 1;
-    }
-    return a.updatedAt.compareTo(b.updatedAt);
-  });
+  List<DartSnippet> ordered = filtered.toList()
+    ..sort((DartSnippet a, DartSnippet b) {
+      if (a.matchesMainLibrary(libraryInputElement.value) &&
+          !b.matchesMainLibrary(libraryInputElement.value)) {
+        return 1;
+      }
+      return a.updatedAt.compareTo(b.updatedAt);
+    });
 
   ordered.reversed.forEach(renderSnippet);
 }
