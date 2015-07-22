@@ -19,7 +19,7 @@ class DartSnippet {
   final List<String> libraries;
   final DateTime createdAt;
   final DateTime updatedAt;
-  User user;
+//  User user;
 
   DartSnippet.fromJSON(this.id, Map json) :
     name = json['name'],
@@ -45,17 +45,16 @@ class DartSnippet {
     });
   }
 
-  DivElement toHtml() {
+  Future<DivElement> toHtml() async {
 //    user = await getUser();
     return new DivElement()
       ..setInnerHtml('''
+      <div class="left">
     ${description}<br><br>
     <b>Libraries:</b> <code>${libraries.join(' ').replaceAll(mainLibrary,
     '<em>$mainLibrary</em>')}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     <code>${mainElements}</code><br>
-    <b>Author:</b> ${author}<br>
-    <!-- <img height="15px" src=user.avatarUrl></img> -->
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
     ${mainLibrary.contains('dart') ?
     '''
@@ -65,11 +64,18 @@ class DartSnippet {
       </a><br>
     ''' : ''}
     ${(true || createdAt == null)  ? '' : '<b>Created </b> ${formatDate(createdAt)}<br>'}
-    ${updatedAt == null ? '' : '<b>Updated </b> ${formatDate(updatedAt)}<br>'}
 
     ${tags.length == 0 ? "" :
     '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
-
+    </div>
+    <div class="right">
+        <img height="60px" float="left" src="https://avatars.githubusercontent.com/u/1035299?v=3"></img>
+        <div style="vertical-align:middle; display:inline-block" float="right">
+            ${updatedAt == null ? '' : ' updated ${formatDate(updatedAt)}<br>'}
+            by kasperpeulen<br>
+            8 points
+            </div>
+      </div>
     ''', validator: new TrustedNodeValidator())
       ..classes.addAll(['snippet', 'mdl-shadow--2dp']);
   }

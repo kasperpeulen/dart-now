@@ -36,3 +36,15 @@ code em {
   width: 660px;
   margin: 20px auto;
 }
+
+.left {
+  margin-right: 30px;
+  display: inline-block;
+  width: 500px;
+}
+
+.right {
+  vertical-align: text-bottom;
+  width: 200px;
+  display: inline-block;
+}
