@@ -19,25 +19,10 @@ main() async {
 
   router = new Router();
   router.root
-    ..addRoute(
-        name: 'home', defaultRoute: true, path: '/', enter: searchLibrary)
-    ..addRoute(
-        name: 'library',
-        path: '/library/:libraryId',
-        enter: searchLibrary,
-        mount: (router) => router
-      ..addRoute(
-          name: 'element',
-          path: '/element/:elementId',
-          enter: searchElement,
-          mount: (router) => router
-        ..addRoute(
-            name: 'keywords',
-            path: '/keyword/:keywordId',
-            enter: searchKeywords)));
+    ..addRoute(name: 'search', defaultRoute: true, path: '/search', enter: searchLibrary);
   router.listen();
 
-  document.onKeyDown.listen((e) => routerGo());
+  document.onKeyUp.listen((e) => routerGo());
 
   libraryInputElement.onInput.listen((e) => routerGo());
   elementInputElement.onInput.listen((e) => routerGo());
@@ -45,21 +30,12 @@ main() async {
 }
 
 routerGo() {
-  String library = libraryInputElement.value == ''
-      ? ''
-      : '/library/${libraryInputElement.value}';
-  String element = elementInputElement.value == ''
-      ? ''
-      : '/element/${elementInputElement.value}';
-  String keyword = keywordsInputElement.value == ''
-      ? ''
-      : '/keyword/${keywordsInputElement.value}';
-
-  String url = '$library$element$keyword';
-  if (url == '') {
-    url = '/';
-  }
-  router.gotoUrl(url);
+  router.go('search', {},
+      queryParameters: {
+        'library': libraryInputElement.value,
+        'element': elementInputElement.value,
+        'keyword': keywordsInputElement.value
+      });
 }
 
 fetchFirebase() async {
@@ -102,19 +78,24 @@ renderSnippet(DartSnippet snippet) {
 }
 
 void searchLibrary(RouteEnterEvent event) {
-  libraryInputElement.value = event.parameters['libraryId'];
-  libraryInputElement.parent.classes.add('is-dirty');
-  filterGistsAndShow();
-}
+  String library = event.queryParameters['library'];
+  String element = event.queryParameters['element'];
+  String keyword = event.queryParameters['keyword'];
 
-void searchElement(RouteEnterEvent event) {
-  elementInputElement.value = event.parameters['elementId'];
-  elementInputElement.parent.classes.add('is-dirty');
-  filterGistsAndShow();
-}
+  libraryInputElement.value = library;
+  elementInputElement.value = element;
+  keywordsInputElement.value = keyword;
 
-void searchKeywords(RouteEnterEvent event) {
-  keywordsInputElement.value = event.parameters['keywordId'];
-  keywordsInputElement.parent.classes.add('is-dirty');
+  if (library.isNotEmpty) {
+    libraryInputElement.parent.classes.add('is-dirty');
+  }
+
+  if (element.isNotEmpty) {
+    elementInputElement.parent.classes.add('is-dirty');
+  }
+
+  if (keyword.isNotEmpty) {
+    keywordsInputElement.parent.classes.add('is-dirty');
+  }
   filterGistsAndShow();
 }
