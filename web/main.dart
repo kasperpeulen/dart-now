@@ -22,8 +22,6 @@ main() async {
     ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
   router.listen();
 
-//  routerGo();
-
   document.onKeyUp.listen((e) => routerGo());
 
   libraryInputElement.onInput.listen((e) => routerGo());
