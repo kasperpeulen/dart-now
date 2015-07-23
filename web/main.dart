@@ -6,8 +6,10 @@ import 'package:route_hierarchical/client.dart';
 
 import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
+import 'package:dartnow/user.dart';
 
 List<DartSnippet> snippets = [];
+List<DartNowUser> users;
 Router router;
 DivElement snippetsDivElement = querySelector('#snippets');
 InputElement libraryInputElement = querySelector('#library');
@@ -41,16 +43,26 @@ routerGo() {
 fetchFirebase() async {
   Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
 
-  firebase.child('gists').onValue.listen((e) {
+
+  firebase.onValue.listen((e) {
     DataSnapshot snapshot = e.snapshot;
     Map json = snapshot.val();
-    snippets = [];
     if (json == null) return;
-    json.forEach((String key, Map value) {
-      snippets.add(new DartSnippet.fromJSON(key, value));
+
+    Map gists = json['gists'];
+    Map usersJson = json['users'];
+    snippets = [];
+    users = [];
+    usersJson.forEach((String username, Map info) {
+      users.add(new DartNowUser.fromJSON(info));
     });
+    gists.forEach((String key, Map value) {
+      snippets.add(new DartSnippet.fromJSON(key, value, users));
+    });
+
     filterGistsAndShow();
   });
+
 }
 
 filterGistsAndShow() {

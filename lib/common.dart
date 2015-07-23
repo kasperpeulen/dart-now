@@ -20,16 +20,16 @@ String formatDate(DateTime date, {bool short: true, bool includeSeconds: false})
   int minutes = difference.inMinutes;
   int seconds = difference.inSeconds;
 
-  if (days < 7 && hours > 24) {
+  if (days <= 7 && hours > 24) {
     return '$days day ago';
   }
-  if (hours < 24 && minutes > 60) {
+  if (hours <= 24 && minutes > 60) {
     return '$hours hour${hours >1 ? 's' : ''} ago';
   }
-  if (minutes < 60 && seconds > 60) {
+  if (minutes <= 60 && seconds > 60) {
     return '$minutes min${minutes >1 ? 's' : ''} ago';
   }
-  if (seconds < 60) {
+  if (seconds <= 60) {
     return '$seconds sec${seconds > 1 ? 's' : ''} ago';
   }
   return new DateFormat("MMM d ''yy 'at' HH:mm").format(date);
