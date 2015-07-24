@@ -9,6 +9,7 @@ import 'package:dartnow/user.dart';
 class DartSnippet {
   final String name;
   final String description;
+  final String shortDescription;
   final String mainLibrary;
   String mainElements;
   final String tags;
@@ -27,6 +28,7 @@ class DartSnippet {
   DartSnippet.fromJSON(this.id, Map json, this.users)
       : name = json['name'],
         description = json['description'],
+        shortDescription = json['shortDescription'],
         mainLibrary = json['mainLibrary'],
         mainElements = json['mainElements'],
         dependencies = json['dependencies'],
@@ -68,7 +70,7 @@ class DartSnippet {
     return new DivElement()
       ..setInnerHtml('''
       <div class="left">
-    ${description}
+    ${shortDescription}
     <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     ${mainElements}<br>
