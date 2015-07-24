@@ -32,13 +32,10 @@ code em {
 .mdl-textfield {
   width: initial;
 }
-#search {
-  width: 660px;
-  margin: 20px auto;
-}
 
 .left {
   margin-right: 30px;
+
   display: inline-block;
   width: 550px;
 }
