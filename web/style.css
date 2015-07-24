@@ -10,9 +10,12 @@ a {
   font-weight: 400;
 }
 code {
-  font-family: Roboto;
-  /*font-family: 'Source Code Pro';*/
-  /*font-size: 14px;*/
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background-color: #f7f7f9;
+  padding: 2px 4px;
+  border: 1px solid #e1e1e8;
+  font-size: 13px;
+  border-radius: 3px;
   /*font-weight: 400;*/
 }
 
@@ -20,6 +23,10 @@ code em {
   font-style: normal;
   font-weight: 500;
   /*font-size: 14px;*/
+}
+
+code em + code em {
+  margin-right: 2px;
 }
 .mdl-textfield {
   margin: 0 15px;

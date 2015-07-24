@@ -10,7 +10,7 @@ class DartSnippet {
   final String name;
   final String description;
   final String mainLibrary;
-  final String mainElements;
+  String mainElements;
   final String tags;
   final String id;
   final String author;
@@ -59,16 +59,19 @@ class DartSnippet {
 
   Future<DivElement> toHtml() async {
     List<String> temp = new List.from(libraries);
+
     temp..removeWhere((l) =>
     mainLibrary.contains(l));
-    String libString = temp.join(' ');
+    String libString = temp.isEmpty ? '' : '<code>${temp.join('</code> <code>')}</code>';
+    mainElements = '<code>${mainElements.split(' ').join('</code> <code>')}</code>';
+    print(libString);
     return new DivElement()
       ..setInnerHtml('''
       <div class="left">
     ${description}
-    <b>Libraries:</b> <code><em>$mainLibrary</em> ${libString}</code><br>
+    <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
-    <code>${mainElements}</code><br>
+    ${mainElements}<br>
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
     ${libraries.every((l) => l.contains('dart:')) ?
     '''
