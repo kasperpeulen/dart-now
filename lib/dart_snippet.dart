@@ -42,8 +42,9 @@ class DartSnippet {
         gistUrl = json['gistUrl'],
         libraries = json['libraries'] == null ? [] : json['libraries'] {
     libraries
-      ..remove(mainLibrary)
-      ..add(mainLibrary)
+      ..removeWhere((l) =>
+    mainLibrary.contains(l))
+      ..addAll(mainLibrary.split(' '))
       ..sort((String a, String b) {
         if (mainLibrary.contains(a)) {
           return -1;
@@ -57,16 +58,19 @@ class DartSnippet {
   }
 
   Future<DivElement> toHtml() async {
+    List<String> temp = libraries;
+    temp..removeWhere((l) =>
+    mainLibrary.contains(l));
+    String libString = temp.join(' ');
     return new DivElement()
       ..setInnerHtml('''
       <div class="left">
     ${description}<br><br>
-    <b>Libraries:</b> <code>${libraries.join(' ').replaceAll(mainLibrary,
-    '<em>$mainLibrary</em>')}</code><br>
+    <b>Libraries:</b> <code><em>$mainLibrary</em> ${libString}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     <code>${mainElements}</code><br>
     <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
-    ${mainLibrary.contains('dart') ?
+    ${libraries.every((l) => l.contains('dart:')) ?
     '''
       <b>Dartpad:</b>
       <a href="https://dartpad.dartlang.org/${id}" target="_blank">
