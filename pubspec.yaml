@@ -8,3 +8,6 @@ dependencies:
   firebase: "^0.6.1"
   intl: '^0.12.4'
   route_hierarchical: '^0.6.2'
+  dart_to_js_script_rewriter: any
+transformers:
+- dart_to_js_script_rewriter
