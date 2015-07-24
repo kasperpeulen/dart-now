@@ -58,7 +58,7 @@ class DartSnippet {
   }
 
   Future<DivElement> toHtml() async {
-    List<String> temp = libraries;
+    List<String> temp = new List.from(libraries);
     temp..removeWhere((l) =>
     mainLibrary.contains(l));
     String libString = temp.join(' ');
