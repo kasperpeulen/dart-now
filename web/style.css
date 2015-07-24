@@ -9,7 +9,7 @@ body {
 a {
   font-weight: 400;
 }
-code {
+p code {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   background-color: #f7f7f9;
   padding: 2px 4px;
@@ -19,9 +19,16 @@ code {
   /*font-weight: 400;*/
 }
 
-code em {
+code {
+  font-family: Roboto;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
+  /*font-size: 14px;*/
+}
+code em {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
   /*font-size: 14px;*/
 }
 
