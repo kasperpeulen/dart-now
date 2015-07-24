@@ -65,7 +65,7 @@ class DartSnippet {
     return new DivElement()
       ..setInnerHtml('''
       <div class="left">
-    ${description}<br><br>
+    ${description}
     <b>Libraries:</b> <code><em>$mainLibrary</em> ${libString}</code><br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     <code>${mainElements}</code><br>
