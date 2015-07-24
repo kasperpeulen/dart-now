@@ -59,7 +59,7 @@ class DartSnippet {
     user = users.firstWhere((DartNowUser user) => user.username == author);
   }
 
-  Future<DivElement> toHtml() async {
+  DivElement toHtml() {
     List<String> temp = new List.from(libraries);
 
     temp..removeWhere((l) =>
@@ -74,11 +74,11 @@ class DartSnippet {
     <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
     ${mainElements}<br>
-    <b>Gist:</b> <a href="${gistUrl}" target="_blank">${gistUrl}</a><br>
+    <b>Gist:</b> <a href="${gistUrl}" onclick="trackOutboundLink('${gistUrl}'); return false;" target="_blank">${gistUrl}</a><br>
     ${libraries.every((l) => l.contains('dart:')) ?
     '''
       <b>Dartpad:</b>
-      <a href="https://dartpad.dartlang.org/${id}" target="_blank">
+      <a href="https://dartpad.dartlang.org/${id}" onclick="trackOutboundLink('https://dartpad.dartlang.org/${id}'); return false;" target="_blank">
         https://dartpad.dartlang.org/${id}
       </a><br>
     ''' : ''}

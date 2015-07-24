@@ -85,8 +85,8 @@ filterGistsAndShow() {
   ordered.reversed.forEach(renderSnippet);
 }
 
-renderSnippet(DartSnippet snippet) async {
-  snippetsDivElement.append((await snippet.toHtml()));
+renderSnippet(DartSnippet snippet){
+  snippetsDivElement.append(snippet.toHtml());
 }
 
 void searchLibrary(RouteEnterEvent event) {
