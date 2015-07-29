@@ -5,6 +5,8 @@ import 'package:dartnow/common.dart';
 import 'package:github/browser.dart';
 import 'dart:async';
 import 'package:dartnow/user.dart';
+import 'dart:js';
+import 'package:firebase/firebase.dart';
 
 class DartSnippet {
   final String name;
@@ -67,9 +69,9 @@ class DartSnippet {
     String libString = temp.isEmpty ? '' : '<code>${temp.join('</code> <code>')}</code>';
     mainElements = '<code>${mainElements.split(' ').join('</code> <code>')}</code>';
     print(libString);
-    return new DivElement()
+    DivElement div = new DivElement()
       ..setInnerHtml('''
-      <div class="left">
+      <div class="left" id="$id">
     ${shortDescription}
     <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
     <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
@@ -77,6 +79,7 @@ class DartSnippet {
     <b>Gist:</b> <a href="${gistUrl}" onclick="trackOutboundLink('${gistUrl}'); return false;" target="_blank">${gistUrl}</a><br>
     ${libraries.every((l) => l.contains('dart:')) ?
     '''
+
       <b>Dartpad:</b>
       <a href="https://dartpad.dartlang.org/${id}" onclick="trackOutboundLink('https://dartpad.dartlang.org/${id}'); return false;" target="_blank">
         https://dartpad.dartlang.org/${id}
@@ -88,7 +91,6 @@ class DartSnippet {
     '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
     </div>
     <div class="right">
-
                       <div style="margin-bottom:5px;">  ${updatedAt == null ? '' : ' updated ${formatDate(updatedAt)}'}</div>
         <img height="40px" float="left" src="${user.avatarUrl}"></img>
         <div style="vertical-align:middle; display:inline-block; margin-top: -3px" float="right">
@@ -99,6 +101,14 @@ class DartSnippet {
       </div>
     ''', validator: new TrustedNodeValidator())
       ..classes.addAll(['snippet', 'mdl-shadow--2dp']);
+    ButtonElement button = new ButtonElement()..text ="GET"..id="$id"..classes.addAll('mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect'.split(' '));
+    context['componentHandler'].callMethod('upgradeElement',[new JsObject.fromBrowserObject(button)]);
+    button.onClick.listen((e) {
+      Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
+      firebase.child('get').set({'kasperpeulen': id});
+    });
+    div.querySelector('.right').children.insert(0, button);
+    return div;
   }
 
   bool matches(String libraryInput, String elementInput, String keywordInput) {
@@ -123,6 +133,7 @@ class DartSnippet {
       return false;
     }
     return true;
+
   }
 
   bool matchesMainLibrary(String libraryInput) {

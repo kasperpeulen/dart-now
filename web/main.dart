@@ -7,6 +7,7 @@ import 'package:route_hierarchical/client.dart';
 import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
 import 'package:dartnow/user.dart';
+import 'dart:js';
 
 List<DartSnippet> snippets = [];
 List<DartNowUser> users;
@@ -21,7 +22,7 @@ main() async {
 
   router = new Router(useFragment: true);
   router.root
-    ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
+    ..addRoute(name: 'search', defaultRoute: true, path: '/search', enter: searchLibrary);
   router.listen();
 
   document.onKeyUp.listen((e) => routerGo());
@@ -42,7 +43,6 @@ routerGo() {
 
 fetchFirebase() async {
   Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
-
 
   firebase.onValue.listen((e) {
     DataSnapshot snapshot = e.snapshot;
@@ -83,6 +83,9 @@ filterGistsAndShow() {
     });
 
   ordered.reversed.forEach(renderSnippet);
+//  querySelectorAll('button').forEach((button) {
+//    context['componentHandler'].callMethod('upgradeElement', [button]);
+//  });
 }
 
 renderSnippet(DartSnippet snippet){
