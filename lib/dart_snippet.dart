@@ -23,11 +23,12 @@ class DartSnippet {
   final List<String> libraries;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final CurrentUser currentUser;
 
   List<DartNowUser> users;
   DartNowUser user;
 
-  DartSnippet.fromJSON(this.id, Map json, this.users)
+  DartSnippet.fromJSON(this.id, Map json, this.users, this.currentUser)
       : name = json['name'],
         description = json['description'],
         shortDescription = json['shortDescription'],
@@ -109,7 +110,7 @@ class DartSnippet {
         'upgradeElement', [new JsObject.fromBrowserObject(button)]);
     button.onClick.listen((e) {
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
-      firebase.child('get').set({'kasperpeulen': id});
+      firebase.child('get').child(currentUser.login).set(id);
     });
     div.querySelector('.insert-button').children.insert(0, button);
     return div;

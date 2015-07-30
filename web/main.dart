@@ -8,6 +8,7 @@ import 'package:dartnow/dart_snippet.dart';
 import 'package:dartnow/common.dart';
 import 'package:dartnow/user.dart';
 import 'dart:js';
+import 'package:github/browser.dart';
 
 List<DartSnippet> snippets = [];
 List<DartNowUser> users;
@@ -16,7 +17,9 @@ DivElement snippetsDivElement = querySelector('#snippets');
 InputElement libraryInputElement = querySelector('#library');
 InputElement elementInputElement = querySelector('#dart_element');
 InputElement keywordsInputElement = querySelector('#keywords');
-
+ButtonElement loginButton = querySelector('#login');
+Firebase firebase;
+CurrentUser currentUser;
 main() async {
   await fetchFirebase();
 
@@ -31,6 +34,36 @@ main() async {
   libraryInputElement.onInput.listen((e) => routerGo());
   elementInputElement.onInput.listen((e) => routerGo());
   keywordsInputElement.onInput.listen((e) => routerGo());
+  await loginWithGitHub();
+}
+
+loginWithGitHub() async {
+
+  // enable the button for logging  in
+  loginButton.disabled = false;
+
+  // If your use your own firbase url, make sure to do the steps in:
+  // https://www-staging.firebase.com/docs/web/guide/login/github.html
+  loginButton.onClick.listen((e) {
+    if (loginButton.text.trim() != "Login with GitHub") {
+      firebase.unauth();
+      loginButton..text = "Login with GitHub";
+    } else {
+      firebase.authWithOAuthRedirect('github');
+    }
+  });
+  firebase.onAuth().listen((authJson) async {
+    if (authJson['provider'] == 'github') {
+      String accessToken = authJson['github']['accessToken'];
+      Authentication auth = new Authentication.withToken(accessToken);
+      GitHub gitHub = createGitHubClient(auth: auth);
+      currentUser = await gitHub.users.getCurrentUser();
+      loginButton..text = "${currentUser.login} Log Out";
+      fetchFirebase();
+    } else {
+      loginButton..text = "Login with github";
+    }
+  });
 }
 
 routerGo() {
@@ -43,7 +76,7 @@ routerGo() {
 }
 
 fetchFirebase() async {
-  Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
+  firebase = new Firebase('https://dartnow.firebaseio.com/');
 
   firebase.onValue.listen((e) {
     DataSnapshot snapshot = e.snapshot;
@@ -58,7 +91,7 @@ fetchFirebase() async {
       users.add(new DartNowUser.fromJSON(info));
     });
     gists.forEach((String key, Map value) {
-      snippets.add(new DartSnippet.fromJSON(key, value, users));
+      snippets.add(new DartSnippet.fromJSON(key, value, users, currentUser));
     });
 
     filterGistsAndShow();
@@ -84,9 +117,6 @@ filterGistsAndShow() {
     });
 
   ordered.reversed.forEach(renderSnippet);
-//  querySelectorAll('button').forEach((button) {
-//    context['componentHandler'].callMethod('upgradeElement', [button]);
-//  });
 }
 
 renderSnippet(DartSnippet snippet){
