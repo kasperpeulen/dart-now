@@ -22,9 +22,10 @@ main() async {
 
   router = new Router(useFragment: true);
   router.root
+    ..addRoute(name: 'start', path: '/', enter: (_) => routerGo())
     ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
   router.listen();
-  routerGo();
+
   document.onKeyUp.listen((e) => routerGo());
 
   libraryInputElement.onInput.listen((e) => routerGo());
