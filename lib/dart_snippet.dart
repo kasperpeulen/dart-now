@@ -46,8 +46,7 @@ class DartSnippet {
         gistUrl = json['gistUrl'],
         libraries = json['libraries'] == null ? [] : json['libraries'] {
     libraries
-      ..removeWhere((l) =>
-    mainLibrary.contains(l))
+      ..removeWhere((l) => mainLibrary.contains(l))
       ..addAll(mainLibrary.split(' '))
       ..sort((String a, String b) {
         if (mainLibrary.contains(a)) {
@@ -64,50 +63,55 @@ class DartSnippet {
   DivElement toHtml() {
     List<String> temp = new List.from(libraries);
 
-    temp..removeWhere((l) =>
-    mainLibrary.contains(l));
-    String libString = temp.isEmpty ? '' : '<code>${temp.join('</code> <code>')}</code>';
-    mainElements = '<code>${mainElements.split(' ').join('</code> <code>')}</code>';
+    temp..removeWhere((l) => mainLibrary.contains(l));
+    String libString =
+        temp.isEmpty ? '' : '<code>${temp.join('</code> <code>')}</code>';
+    mainElements =
+        '<code>${mainElements.split(' ').join('</code> <code>')}</code>';
     print(libString);
     DivElement div = new DivElement()
       ..setInnerHtml('''
-      <div class="left" id="$id">
-    ${shortDescription}
-    <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
-    <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>
-    ${mainElements}<br>
-    <b>Gist:</b> <a href="${gistUrl}" onclick="trackOutboundLink('${gistUrl}'); return false;" target="_blank">${gistUrl}</a><br>
-    ${libraries.every((l) => l.contains('dart:')) ?
-    '''
-
-      <b>Dartpad:</b>
-      <a href="https://dartpad.dartlang.org/${id}" onclick="trackOutboundLink('https://dartpad.dartlang.org/${id}'); return false;" target="_blank">
-        https://dartpad.dartlang.org/${id}
-      </a><br>
-    ''' : ''}
-    ${(true || createdAt == null)  ? '' : '<b>Created </b> ${formatDate(createdAt)}<br>'}
-
-    ${tags.length == 0 ? "" :
-    '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
+<div class="flex">
+  ${shortDescription}
+  <b>Libraries:</b> <code><em>$mainLibrary</em></code> ${libString}<br>
+  <b>Main element${mainElements.split(' ').length > 1 ? "s" : ""}:</b>${mainElements}<br>
+  <b>Gist:</b> <a href="${gistUrl}" onclick="trackOutboundLink('${gistUrl}'); return false;" target="_blank">${gistUrl}</a><br>
+  ${libraries.every((l) => l.contains('dart:')) ?
+  '''
+  <b>Dartpad:</b>
+  <a href="https://dartpad.dartlang.org/${id}" onclick="trackOutboundLink('https://dartpad.dartlang.org/${id}'); return false;" target="_blank">
+    https://dartpad.dartlang.org/${id}
+  </a><br>
+''' : ''}
+  ${tags.length == 0 ? "" : '<b>Tags:</b> ${tags.trim().split(' ').map((t) => '#$t').join(' ')}<br>'}
+</div>
+<div class="vertical layout" style="margin-left:20px; width: 170px">
+  <div class="insert-button flex self-center horizontal layout">
+  </div>
+  <div>
+    <div>updated ${formatDate(updatedAt)}</div>
+    <div style="margin-top: 5px">
+      <img height="40px" style="float:left; margin: 0 5px 0 0" src="${user.avatarUrl}">
+      by ${user.username}<br>
+      ${user.gistCount} point${user.gistCount > 1 ? 's' : ''}
     </div>
-    <div class="right">
-                      <div style="margin-bottom:5px;">  ${updatedAt == null ? '' : ' updated ${formatDate(updatedAt)}'}</div>
-        <img height="40px" float="left" src="${user.avatarUrl}"></img>
-        <div style="vertical-align:middle; display:inline-block; margin-top: -3px" float="right">
-            by ${user.username}<br>
-             ${user.gistCount} point${user.gistCount > 1 ? 's' : ''}
-            </div>
-
-      </div>
-    ''', validator: new TrustedNodeValidator())
-      ..classes.addAll(['snippet', 'mdl-shadow--2dp']);
-    ButtonElement button = new ButtonElement()..text ="GET"..id="$id"..classes.addAll('mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect'.split(' '));
-    context['componentHandler'].callMethod('upgradeElement',[new JsObject.fromBrowserObject(button)]);
+  </div>
+</div>''', validator: new TrustedNodeValidator())
+      ..classes.addAll(['snippet', 'mdl-shadow--2dp', 'horizontal', 'layout']);
+    ButtonElement button = new ButtonElement()
+      ..classes.addAll(['flex', 'self-center'])
+      ..text = "GET"
+      ..id = "$id"
+      ..classes.addAll(
+          'self-center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect'
+              .split(' '));
+    context['componentHandler'].callMethod(
+        'upgradeElement', [new JsObject.fromBrowserObject(button)]);
     button.onClick.listen((e) {
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
       firebase.child('get').set({'kasperpeulen': id});
     });
-    div.querySelector('.right').children.insert(0, button);
+    div.querySelector('.insert-button').children.insert(0, button);
     return div;
   }
 
@@ -133,7 +137,6 @@ class DartSnippet {
       return false;
     }
     return true;
-
   }
 
   bool matchesMainLibrary(String libraryInput) {
@@ -146,5 +149,4 @@ class DartSnippet {
 
   bool _stringIsContainedInList(String string, List<String> list) =>
       list.any((element) => element.contains(string));
-
 }
