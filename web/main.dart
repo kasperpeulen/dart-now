@@ -44,6 +44,8 @@ loginWithGitHub() async {
   // https://www-staging.firebase.com/docs/web/guide/login/github.html
   loginButton.onClick.listen((e) {
     var auth = firebase.getAuth();
+    print(auth);
+    print(1);
     if (auth != null) {
       firebase.unauth();
       loginButton..text = "Login with GitHub";
@@ -52,6 +54,8 @@ loginWithGitHub() async {
     }
   });
   firebase.onAuth().listen((authJson) async {
+    print(authJson);
+    print(0);
     if (authJson['provider'] == 'github') {
       String accessToken = authJson['github']['accessToken'];
       Authentication auth = new Authentication.withToken(accessToken);
