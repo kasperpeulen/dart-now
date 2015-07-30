@@ -69,7 +69,6 @@ class DartSnippet {
         temp.isEmpty ? '' : '<code>${temp.join('</code> <code>')}</code>';
     mainElements =
         '<code>${mainElements.split(' ').join('</code> <code>')}</code>';
-    print(libString);
     DivElement div = new DivElement()
       ..setInnerHtml('''
 <div class="flex">
@@ -110,7 +109,9 @@ class DartSnippet {
         'upgradeElement', [new JsObject.fromBrowserObject(button)]);
     button.onClick.listen((e) {
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
-      firebase.child('get').child(currentUser.login).set(id);
+      if (currentUser != null) {
+        firebase.child('get').child(currentUser.login).set(id);
+      }
     });
     div.querySelector('.insert-button').children.insert(0, button);
     return div;

@@ -22,13 +22,11 @@ Firebase firebase;
 CurrentUser currentUser;
 main() async {
   await fetchFirebase();
-
   router = new Router(useFragment: true);
   router.root
-    ..addRoute(name: 'start', path: '/', enter: (_) => routerGo())
+    ..addRoute(name:'home', path: '/', enter: (_) => routerGo())
     ..addRoute(name: 'search', path: '/search', enter: searchLibrary);
   router.listen();
-
   document.onKeyUp.listen((e) => routerGo());
 
   libraryInputElement.onInput.listen((e) => routerGo());
@@ -45,7 +43,8 @@ loginWithGitHub() async {
   // If your use your own firbase url, make sure to do the steps in:
   // https://www-staging.firebase.com/docs/web/guide/login/github.html
   loginButton.onClick.listen((e) {
-    if (loginButton.text.trim() != "Login with GitHub") {
+    var auth = firebase.getAuth();
+    if (auth != null) {
       firebase.unauth();
       loginButton..text = "Login with GitHub";
     } else {
