@@ -21,6 +21,8 @@ ButtonElement loginButton = querySelector('#login');
 Firebase firebase;
 CurrentUser currentUser;
 main() async {
+  firebase = new Firebase('https://dartnow.firebaseio.com/');
+  loginWithGitHub();
   await fetchFirebase();
   router = new Router(useFragment: true);
   router.root
@@ -32,10 +34,10 @@ main() async {
   libraryInputElement.onInput.listen((e) => routerGo());
   elementInputElement.onInput.listen((e) => routerGo());
   keywordsInputElement.onInput.listen((e) => routerGo());
-  await loginWithGitHub();
+
 }
 
-loginWithGitHub() async {
+loginWithGitHub(){
 
   // enable the button for logging  in
   loginButton.disabled = false;
@@ -79,7 +81,6 @@ routerGo() {
 }
 
 fetchFirebase() async {
-  firebase = new Firebase('https://dartnow.firebaseio.com/');
 
   firebase.onValue.listen((e) {
     DataSnapshot snapshot = e.snapshot;
