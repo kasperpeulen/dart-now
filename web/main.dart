@@ -87,7 +87,7 @@ fetchFirebase() async {
     snippets = [];
     users = [];
     usersJson.forEach((String username, Map info) {
-      users.add(new DartNowUser.fromJSON(info));
+      users.add(new DartNowUser.fromJSON(info['github_info']));
     });
     gists.forEach((String key, Map value) {
       snippets.add(new DartSnippet.fromJSON(key, value, users, currentUser));
