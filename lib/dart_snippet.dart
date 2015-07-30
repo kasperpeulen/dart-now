@@ -105,8 +105,7 @@ class DartSnippet {
       ..classes.addAll(
           'self-center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect'
               .split(' '));
-    context['componentHandler'].callMethod(
-        'upgradeElement', [new JsObject.fromBrowserObject(button)]);
+
     button.onClick.listen((e) {
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
       if (currentUser != null) {

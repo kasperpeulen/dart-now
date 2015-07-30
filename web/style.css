@@ -62,3 +62,7 @@ code em + code em {
   width: 180px;
   display: inline-block;
 }
+
+#login {
+  margin: 10px;
+}

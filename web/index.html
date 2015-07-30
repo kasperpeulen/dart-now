@@ -13,13 +13,7 @@
         href='http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,300italic,500,500italic,700,700italic,'
         rel='stylesheet' type='text/css'>
     <script async src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
-
-      <script async src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
-    <link rel="stylesheet"
-          href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.purple-orange.min.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.purple-orange.min.css">
     <link rel="stylesheet" href="flex.css">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -44,11 +38,9 @@
       </div>
     </div>
     <div id="snippets"></div>
-    <button id="login" style="margin: 2px" class="fixed-right mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" disabled>
-      Login with GitHub
-    </button>
-    <script async type="application/dart" src="main.dart"></script>
-    <script async src="packages/browser/dart.js"></script>
+    <div class='fixed-right' id="login"></div>
+    <script type="application/dart" src="main.dart"></script>
+    <script src="packages/browser/dart.js"></script>
     <script>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
