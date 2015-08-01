@@ -94,7 +94,9 @@ filterGistsAndShow() async {
 
   ordered.reversed.forEach(renderSnippet);
   registerMdl();
-  await componentFactory().run();
+  new Future.delayed(new Duration(milliseconds: 600), () async {
+    await componentFactory().run();
+  });
 }
 
 renderSnippet(DartSnippet snippet){
