@@ -140,8 +140,9 @@ void initGithubLogin() {
       loginDiv.children = [];
       loginDiv.append(loginButton);
       registerMdl();
-      await componentFactory().run();
-
+      new Future.delayed(new Duration(milliseconds: 600), () async {
+        await componentFactory().run();
+      });
     } else {
 
       String accessToken = authJson['github']['accessToken'];
