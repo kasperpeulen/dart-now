@@ -29,10 +29,5 @@ class InfoDialog extends MaterialDialog {
     </code></pre>
     <p>Make sure to use the same github account in dartnow.yaml as you use at dartnow.org, otherwise it won't know which snippet you want to clone.</p>
   </div>
-  <div class="mdl-dialog__actions">
-    <button class="mdl-button mdl-js-button mdl-button--raised" data-mdl-click="onOk()">
-      Got it !
-    </button>
-  </div>
 </div>""";
 }
