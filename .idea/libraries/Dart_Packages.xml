@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="libraryTable">
-  <library name="Dart Packages">
+  <library name="Dart Packages" type="DartPackagesLibraryType">
+    <properties>
+      <option name="packageNameToDirsMap">
+        <entry key="analyzer" />
+        <entry key="args" />
+        <entry key="barback" />
+        <entry key="browser" />
+        <entry key="browser_detect" />
+        <entry key="cli_util" />
+        <entry key="code_transformers" />
+        <entry key="collection" />
+        <entry key="console_log_handler" />
+        <entry key="crypto" />
+        <entry key="csslib" />
+        <entry key="dart_to_js_script_rewriter" />
+        <entry key="di" />
+        <entry key="dnd" />
+        <entry key="firebase" />
+        <entry key="github" />
+        <entry key="html" />
+        <entry key="html5lib" />
+        <entry key="http" />
+        <entry key="http_parser" />
+        <entry key="intl" />
+        <entry key="logging" />
+        <entry key="logging_handlers" />
+        <entry key="matcher" />
+        <entry key="mdl" />
+        <entry key="meta" />
+        <entry key="mustache" />
+        <entry key="path" />
+        <entry key="petitparser" />
+        <entry key="pool" />
+        <entry key="quiver" />
+        <entry key="route_hierarchical" />
+        <entry key="source_maps" />
+        <entry key="source_span" />
+        <entry key="stack_trace" />
+        <entry key="string_scanner" />
+        <entry key="utf" />
+        <entry key="validate" />
+        <entry key="watcher" />
+        <entry key="when" />
+        <entry key="which" />
+        <entry key="xml" />
+        <entry key="yaml" />
+      </option>
+    </properties>
     <CLASSES>
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/analyzer-0.24.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/args-0.12.2+6/lib" />

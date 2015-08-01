@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:dartnow/user.dart';
 import 'dart:js';
 import 'package:firebase/firebase.dart';
+import 'info_dialog.dart';
 
 class DartSnippet {
   final String name;
@@ -24,6 +25,7 @@ class DartSnippet {
   final DateTime createdAt;
   final DateTime updatedAt;
   final CurrentUser currentUser;
+  InfoDialog infoDialog;
 
   List<DartNowUser> users;
   DartNowUser user;
@@ -57,7 +59,7 @@ class DartSnippet {
         }
         return 1;
       });
-
+    infoDialog = new InfoDialog();
     user = users.firstWhere((DartNowUser user) => user.username == author);
   }
 
@@ -107,12 +109,14 @@ class DartSnippet {
               .split(' '));
 
     button.onClick.listen((e) {
+      infoDialog.show();
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
       if (currentUser != null) {
         firebase.child('get').child(currentUser.login).set(id);
       }
     });
     div.querySelector('.insert-button').children.insert(0, button);
+
     return div;
   }
 
