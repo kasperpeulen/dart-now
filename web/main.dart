@@ -137,6 +137,9 @@ void initGithubLogin() {
     if (authJson == null) {
       loginDiv.children = [];
       loginDiv.append(loginButton);
+      registerMdl();
+      await componentFactory().run();
+
     } else {
 
       String accessToken = authJson['github']['accessToken'];
@@ -149,9 +152,9 @@ void initGithubLogin() {
       loginDiv.append(loginMenu());
       await fetchFirebase();
       await filterGistsAndShow();
+
     }
-    registerMdl();
-    await componentFactory().run();
+
   });
 
 }
