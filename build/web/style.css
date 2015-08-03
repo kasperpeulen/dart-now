@@ -1,0 +1,182 @@
+.snippet {
+  /*display: inline-block;*/
+  padding: 10px;
+  margin: 20px 0 ;
+}
+body {
+  font-family: Roboto;
+}
+a {
+  font-weight: 400;
+}
+p code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background-color: #f7f7f9;
+  padding: 2px 4px;
+  border: 1px solid #e1e1e8;
+  font-size: 13px;
+  border-radius: 3px;
+  /*font-weight: 400;*/
+}
+
+code {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  /*font-size: 14px;*/
+}
+code em {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  /*font-size: 14px;*/
+}
+
+code em + code em {
+  margin-right: 2px;
+}
+.mdl-textfield {
+  margin: 0 15px;
+}
+
+#snippets {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.mdl-textfield {
+  width: initial;
+}
+
+#search {
+  margin-top: 10px;
+}
+.left {
+  margin-right: 30px;
+
+  display: inline-block;
+  width: 550px;
+}
+
+.right {
+  vertical-align: text-bottom;
+  width: 180px;
+  display: inline-block;
+}
+
+#login {
+  margin: 10px;
+}
+
+.mdl-dialog__content p {
+  font-size: 14px !important;
+}
+pre{
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  background-color: #f7f7f9;
+  padding: 2px 4px;
+  border: 1px solid #e1e1e8;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+pre code  {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.mdl-dialog-container .mdl-dialog .mdl-dialog__actions {
+  margin-top: 0px;
+}
+
+.mdl-dialog-container {
+  position: fixed;
+
+}
+
+.mdl-dialog-container p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: inherit !important;
+  font-family: Roboto;
+}
+
+div.load-spinner {
+  display: none;
+}
+
+body.mdl-upgrading * {
+  display: none;
+}
+body {
+  height: 100%
+}
+body.mdl-upgrading div.load-spinner * {
+   display: block;
+}
+
+body.mdl-upgrading div.load-spinner {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%
+}
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  align-self: center;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: #ffab40;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+      transform: scale3D(0, 0, 1);
+    }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+    transform: scale3D(1, 1, 1);
+  } 35% {
+      -webkit-transform: scale3D(0, 0, 1);
+      transform: scale3D(0, 0, 1);
+    }
+}
