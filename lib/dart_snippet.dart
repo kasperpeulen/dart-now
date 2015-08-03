@@ -109,11 +109,11 @@ class DartSnippet {
               .split(' '));
 
     button.onClick.listen((e) {
-      infoDialog.show();
       Firebase firebase = new Firebase('https://dartnow.firebaseio.com/');
       if (currentUser != null) {
         firebase.child('get').child(currentUser.login).set(id);
       }
+      infoDialog.show();
     });
     div.querySelector('.insert-button').children.insert(0, button);
 
