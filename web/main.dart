@@ -22,7 +22,6 @@ Firebase firebase;
 DivElement loginDiv = querySelector('#login');
 CurrentUser user;
 
-
 main() async {
   firebase = new Firebase('https://dartnow.firebaseio.com/');
 //  loginWithGitHub();
